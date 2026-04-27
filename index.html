@@ -847,6 +847,7 @@ def q1B(x_bar, s, n, mu0, pop_std):
 
 
 def q1C(test_stat, df, alpha):
+    # yeh zaroorat nhi hain krneeka----as cdf wagera midsem mmain mainly tha
     if df == 0:                        # Z-test: upper-tail
         p_value = 1.0 - _norm_cdf(test_stat)
     else:                              # T-test: upper-tail
