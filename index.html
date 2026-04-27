@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hypothesis Testing Qustions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+<style>
+/* ══════════════════════════════════════════════════════
+   for u....
+══════════════════════════════════════════════════════ */
+:root {
+  --bg:       #080a0f;
+  --surface:  #0e1117;
+  --card:     #121720;
+  --border:   #1e2535;
+  --border2:  #2a3348;
+  --amber:    #e8a020;
+  --amber-d:  #b87a14;
+  --amber-l:  #f5bf5a;
+  --cyan:     #34c8e0;
+  --cyan-d:   #1b8fa0;
+  --red:      #e85050;
+  --green:    #38c96e;
+  --text:     #c8d4e8;
+  --muted:    #5a6882;
+  --faint:    #2a3348;
+  --mono:     'JetBrains Mono', monospace;
+  --sans:     'Syne', sans-serif;
+  --radius:   6px;
+  --glow-a:   0 0 20px rgba(232,160,32,0.15);
+  --glow-c:   0 0 20px rgba(52,200,224,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ══════════════════════════════════════════════════════
+   BACKGROUND GRID
+══════════════════════════════════════════════════════ */
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(52,200,224,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52,200,224,0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════════════════════════════
+   LAYOUT SHELL
+══════════════════════════════════════════════════════ */
+.shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════════════════════════════
+   SIDEBAR NAV
+══════════════════════════════════════════════════════ */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  z-index: 10;
+}
+.sidebar-logo {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.sidebar-logo .course-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--amber);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+.sidebar-logo .exam-title {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
+.nav-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 20px;
+  margin-bottom: 6px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 12px;
+}
+.nav-item:hover, .nav-item.active {
+  background: rgba(232,160,32,0.07);
+  color: var(--amber);
+  border-left-color: var(--amber);
+}
+.nav-item .q-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--border);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-item:hover .q-num, .nav-item.active .q-num {
+  background: var(--amber);
+  color: #000;
+}
+.nav-item .q-label { line-height: 1.2; }
+.sidebar-footer {
+  margin-top: auto;
+  padding: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.sidebar-footer span { color: var(--amber); }
+
+/* ══════════════════════════════════════════════════════
+   MAIN CONTENT
+══════════════════════════════════════════════════════ */
+.main {
+  padding: 40px 48px 80px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ══════════════════════════════════════════════════════
+   HEADER
+══════════════════════════════════════════════════════ */
+.page-header {
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.page-header .badge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+.badge-amber { background: rgba(232,160,32,0.12); color: var(--amber); border: 1px solid rgba(232,160,32,0.25); }
+.badge-red   { background: rgba(232,80,80,0.10);  color: var(--red);   border: 1px solid rgba(232,80,80,0.22); }
+.badge-cyan  { background: rgba(52,200,224,0.08); color: var(--cyan);  border: 1px solid rgba(52,200,224,0.2); }
+
+.page-header h1 {
+  font-family: var(--sans);
+  font-size: 34px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.page-header h1 .accent { color: var(--amber); }
+.page-header .subtitle {
+  color: var(--muted);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.page-header .subtitle span { display: flex; align-items: center; gap: 5px; }
+.dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border2); }
+
+/* ══════════════════════════════════════════════════════
+   INSTRUCTIONS CARD
+══════════════════════════════════════════════════════ */
+.instructions-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 36px;
+  overflow: hidden;
+}
+.instructions-card .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(232,160,32,0.04);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.instructions-card.open .card-header {
+  border-bottom-color: var(--border);
+}
+.instructions-card .card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.warn-icon { font-size: 14px; }
+.card-header h3 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-weight: 600;
+}
+.chevron {
+  width: 14px; height: 14px;
+  color: var(--muted);
+  transition: transform 0.25s;
+}
+.instructions-card.open .chevron { transform: rotate(180deg); }
+.instructions-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.instructions-card.open .instructions-body { max-height: 1000px; }
+.instructions-body-inner {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.instr-section h4 {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.instr-section h4::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 1px;
+  background: var(--cyan);
+}
+.instr-section ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.instr-section ul li {
+  font-size: 12px;
+  color: var(--text);
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.5;
+}
+.instr-section ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--amber);
+  font-size: 9px;
+  top: 3px;
+}
+.instr-section ul li strong { color: var(--red); font-weight: 600; }
+
+/* ══════════════════════════════════════════════════════
+   QUESTION CARDS
+══════════════════════════════════════════════════════ */
+.question-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  scroll-margin-top: 24px;
+}
+.question-card:hover {
+  border-color: var(--border2);
+  box-shadow: var(--glow-a);
+}
+
+/* Q Header */
+.q-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.q-number {
+  font-family: var(--sans);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--border2);
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 28px;
+  margin-top: 2px;
+  letter-spacing: -0.03em;
+  transition: color 0.2s;
+}
+.question-card:hover .q-number { color: var(--amber-d); }
+.q-header-right { flex: 1; }
+.q-title {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.q-subtitle {
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.q-subtitle .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.q-subtitle .tag.file { color: var(--cyan); border-color: rgba(52,200,224,0.2); }
+
+/* Context Block */
+.q-context {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.2);
+}
+.context-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.context-label::before {
+  content: '';
+  display: inline-block;
+  width: 16px; height: 1px;
+  background: var(--muted);
+}
+.q-context p {
+  font-size: 12.5px;
+  color: #8fa0c0;
+  line-height: 1.65;
+}
+
+/* Tasks */
+.q-tasks { padding: 20px 24px; }
+.task {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed var(--faint);
+}
+.task:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.task-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.task-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  background: var(--amber);
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 4px;
+  flex-shrink: 0;
+  font-family: var(--sans);
+}
+.task-fn {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--cyan);
+  background: rgba(52,200,224,0.06);
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(52,200,224,0.15);
+}
+.task-body {
+  font-size: 12.5px;
+  color: #8fa0c0;
+  line-height: 1.65;
+  padding-left: 32px;
+}
+.task-body .fn-name {
+  color: var(--amber-l);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.task-body strong { color: var(--text); font-weight: 500; }
+.param-list {
+  margin: 8px 0 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.param-item {
+  font-size: 12px;
+  color: #6a7a98;
+  padding-left: 16px;
+  position: relative;
+}
+.param-item::before {
+  content: '─';
+  position: absolute;
+  left: 0;
+  color: var(--border2);
+}
+.param-item .pname { color: var(--cyan); }
+.param-item .ptype { color: var(--amber); font-size: 11px; margin-left: 4px; }
+.returns {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--mono);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 5px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.returns .ret-label { color: var(--muted); }
+.returns .ret-type { color: var(--green); }
+
+/* Dataset Info */
+.dataset-info {
+  margin: 0 24px 16px;
+  padding: 10px 14px;
+  background: rgba(52,200,224,0.04);
+  border: 1px solid rgba(52,200,224,0.1);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  flex-wrap: wrap;
+}
+.dataset-info .ds-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+}
+.dataset-info .ds-item .ds-val { color: var(--cyan); font-family: var(--mono); }
+
+/* CSV Download Links */
+.csv-link {
+  color: var(--amber);
+  text-decoration: none;
+  cursor: pointer;
+  font-family: var(--mono);
+  border-bottom: 1px dotted var(--amber);
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.csv-link:hover {
+  color: var(--amber-l);
+  border-bottom-color: var(--amber-l);
+  text-decoration: underline;
+}
+
+/* Solution Panel */
+.solution-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-top: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+  background: rgba(0,0,0,0.15);
+  transition: background 0.15s;
+}
+.solution-toggle:hover { background: rgba(232,160,32,0.05); }
+.solution-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+.question-card.sol-open .solution-toggle-left { color: var(--amber); }
+.sol-icon { font-size: 13px; }
+.sol-chevron {
+  width: 12px; height: 12px;
+  color: var(--muted);
+  transition: transform 0.25s, color 0.15s;
+}
+.question-card.sol-open .sol-chevron { transform: rotate(180deg); color: var(--amber); }
+
+.solution-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.question-card.sol-open .solution-panel { max-height: 3000px; }
+.solution-inner {
+  border-top: 1px solid var(--border);
+  background: #0d1117;
+}
+.sol-header {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.sol-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+.sol-header-left::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.copy-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-family: var(--mono);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.05em;
+}
+.copy-btn:hover {
+  background: var(--amber);
+  color: #000;
+  border-color: var(--amber);
+}
+.solution-inner pre {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+.solution-inner pre code {
+  padding: 20px 24px !important;
+  font-family: var(--mono) !important;
+  font-size: 12.5px !important;
+  line-height: 1.7 !important;
+  display: block;
+  overflow-x: auto;
+}
+/* override hljs bg */
+.hljs { background: #0d1117 !important; }
+
+/* ══════════════════════════════════════════════════════
+   FOOTER / BOTTOM
+══════════════════════════════════════════════════════ */
+.page-footer {
+  margin-top: 40px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+}
+.page-footer strong { color: var(--red); }
+.page-footer p + p { margin-top: 4px; }
+
+/* ══════════════════════════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ══════════════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.question-card {
+  animation: fadeUp 0.4s ease both;
+}
+.question-card:nth-child(1) { animation-delay: 0.05s; }
+.question-card:nth-child(2) { animation-delay: 0.10s; }
+.question-card:nth-child(3) { animation-delay: 0.15s; }
+.question-card:nth-child(4) { animation-delay: 0.20s; }
+.question-card:nth-child(5) { animation-delay: 0.25s; }
+.question-card:nth-child(6) { animation-delay: 0.30s; }
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .shell { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .main { padding: 24px 20px 60px; }
+  .instructions-body-inner { grid-template-columns: 1fr; }
+  .page-header h1 { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ════════════════ SIDEBAR ════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span class="course-tag">IC252 · Prob &amp; Stats</span>
+    <span class="exam-title">Hypothesis Testing</span>
+  </div>
+  <div class="nav-label">Questions</div>
+  <a class="nav-item active" href="#q1">
+    <span class="q-num">1</span>
+    <span class="q-label">One-Sample Z/T Test</span>
+  </a>
+  <a class="nav-item" href="#q2">
+    <span class="q-num">2</span>
+    <span class="q-label">Two-Sample T-Test</span>
+  </a>
+  <a class="nav-item" href="#q3">
+    <span class="q-num">3</span>
+    <span class="q-label">Chi-Square GoF</span>
+  </a>
+  <a class="nav-item" href="#q4">
+    <span class="q-num">4</span>
+    <span class="q-label">Bootstrap Permutation</span>
+  </a>
+  <a class="nav-item" href="#q5">
+    <span class="q-num">5</span>
+    <span class="q-label">Type I/II &amp; Power</span>
+  </a>
+  <a class="nav-item" href="#q6">
+    <span class="q-num">6</span>
+    <span class="q-label">One-Way ANOVA</span>
+  </a>
+  <div class="sidebar-footer">
+    <span>numpy · pandas · matplotlib</span><br/>
+    No scipy · No statsmodels<br/>
+    No rounding — 10 decimal places
+  </div>
+</aside>
+
+<!-- ════════════════ MAIN ════════════════ -->
+<main class="main">
+
+  <!-- PAGE HEADER -->
+
+  <!-- INSTRUCTIONS -->
+
+
+  <!-- ════ Q1 ════ -->
+  <div class="question-card" id="q1">
+    <div class="q-header">
+      <div class="q-number">01</div>
+      <div class="q-header-right">
+        <div class="q-title">One-Sample Hypothesis Test (Z vs. T)</div>
+        <div class="q-subtitle">
+          <span class="tag">3 functions</span>
+          <span class="tag file">📄 api_response.csv</span>
+          <span class="tag">Dynamic Z/T selection</span>
+        </div>
+      </div>
+    </div>
+    <div class="q-context">
+      <div class="context-label">Context</div>
+      <p>A cloud provider claims that the average API response time on their servers is at most <strong>200 ms</strong>. A system reliability engineer suspects the true mean is higher and collects a sample of response times. Depending on the sample size, the correct test statistic — either a <strong>Z-statistic</strong> (n ≥ 30, population std known) or a <strong>T-statistic</strong> (n &lt; 30, population std unknown) — must be selected dynamically.</p>
+    </div>
+    <div class="dataset-info">
+      <span class="ds-item">File: <a href="api_response.csv" download class="csv-link">📥 api_response.csv</a></span>
+      <span class="ds-item">Key column: <span class="ds-val">Response Time ms (Float)</span></span>
+    </div>
+    <div class="q-tasks">
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">A</span>
+          <span class="task-fn">q1A(df)</span>
+        </div>
+        <div class="task-body">
+          Extract the <span class="fn-name">Response Time ms</span> column. Using <strong>definitional formulas</strong>, compute the <strong>sample mean</strong> (x̄), <strong>sample standard deviation</strong> (s), and <strong>sample size</strong> (n). Return these three values in that order.
+          <div class="param-list">
+            <div class="param-item"><span class="pname">df</span><span class="ptype">DataFrame</span> — the input dataframe</div>
+          </div>
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, float, int)</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">B</span>
+          <span class="task-fn">q1B(x_bar, s, n, mu0, pop_std)</span>
+        </div>
+        <div class="task-body">
+          If <strong>n ≥ 30 and pop_std &gt; 0</strong>, compute the <strong>Z-statistic</strong> using the known population std. Otherwise compute the <strong>T-statistic</strong> using the sample std. Compute degrees of freedom (df = n − 1; return 0 for the Z-case).
+          <div class="param-list">
+            <div class="param-item"><span class="pname">x_bar</span><span class="ptype">float</span> — sample mean</div>
+            <div class="param-item"><span class="pname">s</span><span class="ptype">float</span> — sample standard deviation</div>
+            <div class="param-item"><span class="pname">n</span><span class="ptype">int</span> — sample size</div>
+            <div class="param-item"><span class="pname">mu0</span><span class="ptype">float</span> — claimed population mean (e.g. 200.0)</div>
+            <div class="param-item"><span class="pname">pop_std</span><span class="ptype">float</span> — known population std (0.0 if unknown)</div>
+          </div>
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, int)</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">C</span>
+          <span class="task-fn">q1C(test_stat, df, alpha)</span>
+        </div>
+        <div class="task-body">
+          Using a <strong>series approximation of the normal CDF</strong> (for Z) or the <strong>T-distribution CDF via regularised incomplete beta</strong> (for T), compute the <strong>one-tailed upper-tail p-value</strong>. Return True if H₀ is rejected (p-value &lt; alpha), False otherwise.
+          <div class="param-list">
+            <div class="param-item"><span class="pname">test_stat</span><span class="ptype">float</span> — the computed test statistic</div>
+            <div class="param-item"><span class="pname">df</span><span class="ptype">int</span> — degrees of freedom (0 means use Z)</div>
+            <div class="param-item"><span class="pname">alpha</span><span class="ptype">float</span> — significance level (e.g. 0.05)</div>
+          </div>
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, bool)</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="solution-toggle" onclick="toggleSol(this)">
+      <div class="solution-toggle-left">
+        <span class="sol-icon">◈</span> View Solution
+      </div>
+      <svg class="sol-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+    <div class="solution-panel">
+      <div class="solution-inner">
+        <div class="sol-header">
+          <div class="sol-header-left">Solution — Q1</div>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-python">import numpy as np
+import pandas as pd
+import math
+
+
+# ────────────────────────────────────────────────────────────────────
+#  CDF HELPERS  (from scratch — no scipy)
+# ────────────────────────────────────────────────────────────────────
+
+def _norm_cdf(x):
+    """Standard normal CDF via A&S 26.2.17 rational approximation."""
+    t = 1.0 / (1.0 + 0.2316419 * abs(x))
+    poly = t * (0.319381530
+          + t * (-0.356563782
+          + t * (1.421413741
+          + t * (-1.453152027
+          + t * 1.061405429))))
+    pdf_val = math.exp(-0.5 * x * x) / math.sqrt(2.0 * math.pi)
+    cdf_pos = 1.0 - pdf_val * poly
+    return cdf_pos if x >= 0 else 1.0 - cdf_pos
+
+
+def _betacf(a, b, x, max_iter=300, eps=3e-12, fpmin=1e-300):
+    """Continued-fraction evaluation used by _betainc (Lentz's algorithm)."""
+    qab = a + b
+    qap = a + 1.0
+    qam = a - 1.0
+    c = 1.0
+    d = 1.0 - qab * x / qap
+    if abs(d) < fpmin:
+        d = fpmin
+    d = 1.0 / d
+    h = d
+    for m in range(1, max_iter + 1):
+        m2 = 2 * m
+        aa = m * (b - m) * x / ((qam + m2) * (a + m2))
+        d = 1.0 + aa * d
+        if abs(d) < fpmin: d = fpmin
+        c = 1.0 + aa / c
+        if abs(c) < fpmin: c = fpmin
+        d = 1.0 / d
+        h *= d * c
+        aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
+        d = 1.0 + aa * d
+        if abs(d) < fpmin: d = fpmin
+        c = 1.0 + aa / c
+        if abs(c) < fpmin: c = fpmin
+        d = 1.0 / d
+        delta = d * c
+        h *= delta
+        if abs(delta - 1.0) < eps:
+            break
+    return h
+
+
+def _betainc(a, b, x):
+    """Regularised incomplete beta function I_x(a, b)."""
+    if x <= 0.0: return 0.0
+    if x >= 1.0: return 1.0
+    lbeta = math.lgamma(a + b) - math.lgamma(a) - math.lgamma(b)
+    bt = math.exp(lbeta + a * math.log(x) + b * math.log(1.0 - x))
+    if x < (a + 1.0) / (a + b + 2.0):
+        return bt * _betacf(a, b, x) / a
+    else:
+        return 1.0 - bt * _betacf(b, a, 1.0 - x) / b
+
+
+def _t_sf(t, df):
+    """Upper-tail P(T > t) for Student's t with `df` degrees of freedom."""
+    x = df / (df + t * t)
+    ib = _betainc(df / 2.0, 0.5, x)
+    return 0.5 * ib if t >= 0 else 1.0 - 0.5 * ib
+
+
+# ────────────────────────────────────────────────────────────────────
+#  QUESTION 1 FUNCTIONS
+# ────────────────────────────────────────────────────────────────────
+
+def q1A(df):
+    x = df['Response Time ms'].values
+    n = int(len(x))
+    x_bar = float(np.sum(x) / n)
+    s = float(np.sqrt(np.sum((x - x_bar) ** 2) / (n - 1)))
+    return (x_bar, s, n)
+
+
+def q1B(x_bar, s, n, mu0, pop_std):
+    if n >= 30 and pop_std > 0:
+        stat = (x_bar - mu0) / (pop_std / np.sqrt(n))
+        df = 0
+    else:
+        stat = (x_bar - mu0) / (s / np.sqrt(n))
+        df = n - 1
+    return (float(stat), int(df))
+
+
+def q1C(test_stat, df, alpha):
+    if df == 0:                        # Z-test: upper-tail
+        p_value = 1.0 - _norm_cdf(test_stat)
+    else:                              # T-test: upper-tail
+        p_value = _t_sf(test_stat, df)
+    decision = bool(p_value < alpha)
+    return (float(p_value), decision)
+
+
+if __name__ == '__main__':
+    df = pd.read_csv('api_response.csv')
+    x_bar, s, n = q1A(df)
+    stat, dof    = q1B(x_bar, s, n, 200.0, 0.0)   # pass actual pop_std if known
+    p_val, rej   = q1C(stat, dof, 0.05)
+    print(f"x̄={x_bar}, s={s}, n={n}")
+    print(f"stat={stat}, df={dof}")
+    print(f"p={p_val}, reject={rej}")
+</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ Q2 ════ -->
+  <div class="question-card" id="q2">
+    <div class="q-header">
+      <div class="q-number">02</div>
+      <div class="q-header-right">
+        <div class="q-title">Two-Sample Independent T-Test (Welch)</div>
+        <div class="q-subtitle">
+          <span class="tag">3 functions</span>
+          <span class="tag file">📄 cluster_latency.csv</span>
+          <span class="tag">Welch-Satterthwaite df</span>
+        </div>
+      </div>
+    </div>
+    <div class="q-context">
+      <div class="context-label">Context</div>
+      <p>A company operates two data centre clusters — <strong>Cluster Alpha</strong> and <strong>Cluster Beta</strong>. The operations team claims there is no significant difference in mean query latency between the two clusters. Test this using a <strong>Welch T-statistic</strong> computed from scratch (which does not assume equal variances).</p>
+    </div>
+    <div class="dataset-info">
+      <span class="ds-item">File: <a href="cluster_latency.csv" download class="csv-link">📥 cluster_latency.csv</a></span>
+      <span class="ds-item">Columns: <span class="ds-val">Alpha Latency ms, Beta Latency ms (Float)</span></span>
+    </div>
+    <div class="q-tasks">
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">A</span>
+          <span class="task-fn">q2A(df)</span>
+        </div>
+        <div class="task-body">
+          Extract both columns. Using <strong>definitional formulas</strong>, compute sample mean, sample variance, and sample size for each cluster. Return in order: mean_alpha, var_alpha, n_alpha, mean_beta, var_beta, n_beta.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, float, int, float, float, int)</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">B</span>
+          <span class="task-fn">q2B(mean_alpha, var_alpha, n_alpha, mean_beta, var_beta, n_beta)</span>
+        </div>
+        <div class="task-body">
+          Compute the <strong>Welch T-statistic</strong> and the <strong>Welch-Satterthwaite degrees of freedom</strong> using the exact formula (not min(n₁,n₂) − 1).
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, float)</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">C</span>
+          <span class="task-fn">q2C(t_stat, df, alpha)</span>
+        </div>
+        <div class="task-body">
+          <strong>Two-tailed test</strong> (H₀: μ_alpha = μ_beta). Compute the two-tailed p-value using the same CDF approximation as Q1c. Return p-value and decision.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, bool)</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="solution-toggle" onclick="toggleSol(this)">
+      <div class="solution-toggle-left">
+        <span class="sol-icon">◈</span> View Solution
+      </div>
+      <svg class="sol-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+    <div class="solution-panel">
+      <div class="solution-inner">
+        <div class="sol-header">
+          <div class="sol-header-left">Solution — Q2</div>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-python"># (Assumes _betainc, _betacf, _norm_cdf, _t_sf helpers are defined — see Q1 solution)
+
+def q2A(df):
+    a = df['Alpha Latency ms'].values
+    b = df['Beta Latency ms'].values
+    na, nb  = int(len(a)), int(len(b))
+    ma, mb  = float(np.sum(a) / na), float(np.sum(b) / nb)
+    va      = float(np.sum((a - ma) ** 2) / (na - 1))
+    vb      = float(np.sum((b - mb) ** 2) / (nb - 1))
+    return (ma, va, na, mb, vb, nb)
+
+
+def q2B(mean_alpha, var_alpha, n_alpha, mean_beta, var_beta, n_beta):
+    se = np.sqrt(var_alpha / n_alpha + var_beta / n_beta)
+    t_stat = float((mean_alpha - mean_beta) / se)
+
+    # Welch-Satterthwaite formula
+    term_a = var_alpha / n_alpha
+    term_b = var_beta  / n_beta
+    num    = (term_a + term_b) ** 2
+    denom  = (term_a ** 2 / (n_alpha - 1)) + (term_b ** 2 / (n_beta - 1))
+    df     = float(num / denom)
+    return (t_stat, df)
+
+
+def q2C(t_stat, df, alpha):
+    # Two-tailed: P(|T| > |t|) = 2 * P(T > |t|)
+    p_value  = 2.0 * _t_sf(abs(t_stat), df)
+    decision = bool(p_value < alpha)
+    return (float(p_value), decision)
+
+
+if __name__ == '__main__':
+    df = pd.read_csv('cluster_latency.csv')
+    ma, va, na, mb, vb, nb = q2A(df)
+    t_stat, dof             = q2B(ma, va, na, mb, vb, nb)
+    p_val, rej              = q2C(t_stat, dof, 0.05)
+    print(f"Welch t={t_stat:.10f}, df={dof:.10f}")
+    print(f"p={p_val:.10f}, reject={rej}")
+</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ Q3 ════ -->
+  <div class="question-card" id="q3">
+    <div class="q-header">
+      <div class="q-number">03</div>
+      <div class="q-header-right">
+        <div class="q-title">Chi-Square Goodness-of-Fit Test</div>
+        <div class="q-subtitle">
+          <span class="tag">3 functions</span>
+          <span class="tag file">📄 network_packets.csv</span>
+          <span class="tag">χ² critical value comparison</span>
+        </div>
+      </div>
+    </div>
+    <div class="q-context">
+      <div class="context-label">Context</div>
+      <p>A network security team monitors traffic at a corporate gateway. According to the vendor specification, packet types should be distributed as: <strong>HTTP — 40%, HTTPS — 35%, DNS — 15%, Other — 10%</strong>. The team suspects the live distribution has shifted. Compute a Chi-Square Goodness-of-Fit statistic entirely from scratch.</p>
+    </div>
+    <div class="dataset-info">
+      <span class="ds-item">File: <a href="network_packets.csv" download class="csv-link">📥 network_packets.csv</a></span>
+      <span class="ds-item">Key column: <span class="ds-val">Packet Type (String: HTTP / HTTPS / DNS / Other)</span></span>
+    </div>
+    <div class="q-tasks">
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">A</span>
+          <span class="task-fn">q3A(df)</span>
+        </div>
+        <div class="task-body">
+          Count observed frequency of each packet type. Return a dictionary with exactly the four keys: <strong>"HTTP", "HTTPS", "DNS", "Other"</strong> and their integer counts.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">dict(str → int)</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">B</span>
+          <span class="task-fn">q3B(observed, expected_props)</span>
+        </div>
+        <div class="task-body">
+          Derive total sample size from the observed dict. Compute expected frequencies. Using <strong>χ² = Σ[(O − E)² / E]</strong>, compute the chi-square statistic. Also compute degrees of freedom (categories − 1).
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, int)</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">C</span>
+          <span class="task-fn">q3C(chi2_stat, df, chi2_critical)</span>
+        </div>
+        <div class="task-body">
+          Compare the test statistic against the critical value (e.g. 7.815 for α=0.05, df=3). Return True if H₀ is rejected, and the absolute difference between the statistic and critical value.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(bool, float)</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="solution-toggle" onclick="toggleSol(this)">
+      <div class="solution-toggle-left">
+        <span class="sol-icon">◈</span> View Solution
+      </div>
+      <svg class="sol-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+    <div class="solution-panel">
+      <div class="solution-inner">
+        <div class="sol-header">
+          <div class="sol-header-left">Solution — Q3</div>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-python">def q3A(df):
+    observed = {}
+    for ptype in ["HTTP", "HTTPS", "DNS", "Other"]:
+        observed[ptype] = int(np.sum(df['Packet Type'] == ptype))
+    return observed
+
+
+def q3B(observed, expected_props):
+    n      = sum(observed.values())          # total sample size
+    chi2   = 0.0
+    for key in observed:
+        O     = observed[key]
+        E     = n * expected_props[key]
+        chi2 += (O - E) ** 2 / E
+    df = len(observed) - 1                   # 4 categories → df = 3
+    return (float(chi2), int(df))
+
+
+def q3C(chi2_stat, df, chi2_critical):
+    rejected = bool(chi2_stat > chi2_critical)
+    diff     = float(abs(chi2_stat - chi2_critical))
+    return (rejected, diff)
+
+
+if __name__ == '__main__':
+    df     = pd.read_csv('network_packets.csv')
+    obs    = q3A(df)
+    props  = {"HTTP": 0.40, "HTTPS": 0.35, "DNS": 0.15, "Other": 0.10}
+    chi2, dof      = q3B(obs, props)
+    rej, diff      = q3C(chi2, dof, 7.815)   # χ²_crit for α=0.05, df=3
+    print(f"χ²={chi2:.10f}, df={dof}")
+    print(f"reject={rej}, |χ²-crit|={diff:.10f}")
+</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ Q4 ════ -->
+  <div class="question-card" id="q4">
+    <div class="q-header">
+      <div class="q-number">04</div>
+      <div class="q-header-right">
+        <div class="q-title">Bootstrap Permutation Test</div>
+        <div class="q-subtitle">
+          <span class="tag">3 functions</span>
+          <span class="tag file">📄 recovery_times.csv</span>
+          <span class="tag">Non-parametric · np.random.permutation</span>
+        </div>
+      </div>
+    </div>
+    <div class="q-context">
+      <div class="context-label">Context</div>
+      <p>A pharmaceutical company is testing whether a new formulation reduces average recovery time compared to standard treatment. Since the population distribution is unknown, a <strong>Bootstrap Permutation Test</strong> is used to assess whether the observed difference in means is statistically significant.</p>
+    </div>
+    <div class="dataset-info">
+      <span class="ds-item">File: <a href="recovery_times.csv" download class="csv-link">📥 recovery_times.csv</a></span>
+      <span class="ds-item">Columns: <span class="ds-val">Recovery Days (Float), Treatment (Standard | New)</span></span>
+    </div>
+    <div class="q-tasks">
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">A</span>
+          <span class="task-fn">q4A(df)</span>
+        </div>
+        <div class="task-body">
+          Separate data into "Standard" and "New" arrays. Compute observed difference: <strong>mean(New) − mean(Standard)</strong>. Return the observed difference, Standard array, and New array.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, ndarray, ndarray)</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">B</span>
+          <span class="task-fn">q4B(group_standard, group_new, num_permutations, random_seed)</span>
+        </div>
+        <div class="task-body">
+          Set random seed. Pool all observations. For each permutation, shuffle with <span class="fn-name">np.random.permutation</span>, split into two groups of original sizes, record the difference in means. Return the permutation distribution as a numpy array.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">numpy.ndarray</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">C</span>
+          <span class="task-fn">q4C(observed_diff, perm_distribution, alpha)</span>
+        </div>
+        <div class="task-body">
+          Compute the <strong>two-tailed bootstrap p-value</strong> as the proportion of permutation differences whose absolute value ≥ |observed_diff|. Return p-value and decision.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, bool)</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="solution-toggle" onclick="toggleSol(this)">
+      <div class="solution-toggle-left">
+        <span class="sol-icon">◈</span> View Solution
+      </div>
+      <svg class="sol-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+    <div class="solution-panel">
+      <div class="solution-inner">
+        <div class="sol-header">
+          <div class="sol-header-left">Solution — Q4</div>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-python">def q4A(df):
+    std_grp = df[df['Treatment'] == 'Standard']['Recovery Days'].values
+    new_grp = df[df['Treatment'] == 'New']['Recovery Days'].values
+    obs_diff = float(np.sum(new_grp) / len(new_grp)
+                   - np.sum(std_grp) / len(std_grp))
+    return (obs_diff, std_grp, new_grp)
+
+
+def q4B(group_standard, group_new, num_permutations, random_seed):
+    np.random.seed(random_seed)
+    combined  = np.concatenate([group_standard, group_new])
+    n_std     = len(group_standard)
+    perm_diff = np.empty(num_permutations)
+    for i in range(num_permutations):
+        shuffled       = np.random.permutation(combined)
+        perm_std       = shuffled[:n_std]
+        perm_new       = shuffled[n_std:]
+        perm_diff[i]   = (np.sum(perm_new) / len(perm_new)
+                        - np.sum(perm_std) / len(perm_std))
+    return perm_diff
+
+
+def q4C(observed_diff, perm_distribution, alpha):
+    p_value  = float(
+        np.sum(np.abs(perm_distribution) >= abs(observed_diff))
+        / len(perm_distribution)
+    )
+    decision = bool(p_value < alpha)
+    return (p_value, decision)
+
+
+if __name__ == '__main__':
+    df = pd.read_csv('recovery_times.csv')
+    obs_diff, std_grp, new_grp = q4A(df)
+    perm_dist                  = q4B(std_grp, new_grp, 10000, 42)
+    p_val, rej                 = q4C(obs_diff, perm_dist, 0.05)
+    print(f"Observed diff={obs_diff:.10f}")
+    print(f"p={p_val:.10f}, reject={rej}")
+</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ Q5 ════ -->
+  <div class="question-card" id="q5">
+    <div class="q-header">
+      <div class="q-number">05</div>
+      <div class="q-header-right">
+        <div class="q-title">Type I Error, Type II Error &amp; Statistical Power</div>
+        <div class="q-subtitle">
+          <span class="tag">3 functions</span>
+          <span class="tag">Simulation-based · No CSV</span>
+          <span class="tag">Empirical vs Theoretical Power</span>
+        </div>
+      </div>
+    </div>
+    <div class="q-context">
+      <div class="context-label">Context</div>
+      <p>A factory quality-control system flags a batch as defective if the sample mean weight falls below a threshold μ₀. Empirically estimate the <strong>Type I error rate</strong> (false alarm), <strong>Type II error rate</strong> (missed detection), and <strong>statistical power</strong> through simulation, and compare empirical power against the theoretical formula.</p>
+    </div>
+    <div class="q-tasks">
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">A</span>
+          <span class="task-fn">q5A(num_simulations, random_seed, mu0, sigma, n, alpha, z_critical)</span>
+        </div>
+        <div class="task-body">
+          Under H₀ (true mean = mu0), draw <em>num_simulations</em> samples of size n from a normal distribution. Compute Z-statistic for each sample. The empirical <strong>Type I error rate</strong> is the proportion where H₀ is incorrectly rejected (Z &lt; z_critical for lower-tail test).
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">float</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">B</span>
+          <span class="task-fn">q5B(num_simulations, random_seed, mu0, sigma, n, alpha, z_critical, mu1)</span>
+        </div>
+        <div class="task-body">
+          Under H₁ (true mean = mu1), draw <em>num_simulations</em> samples of size n. The empirical <strong>Type II error rate (β)</strong> is the proportion where H₀ is NOT rejected even though it is false.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">float</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">C</span>
+          <span class="task-fn">q5C(num_simulations, random_seed, mu0, sigma, n, alpha, z_critical, mu1)</span>
+        </div>
+        <div class="task-body">
+          Derive empirical power = 1 − β. Compute <strong>theoretical power</strong>:<br/>
+          Power = Φ(z_critical + (mu0 − mu1) / (sigma / √n))<br/>
+          Return empirical power, theoretical power, and absolute difference between them.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, float, float)</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="solution-toggle" onclick="toggleSol(this)">
+      <div class="solution-toggle-left">
+        <span class="sol-icon">◈</span> View Solution
+      </div>
+      <svg class="sol-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+    <div class="solution-panel">
+      <div class="solution-inner">
+        <div class="sol-header">
+          <div class="sol-header-left">Solution — Q5</div>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-python"># (Assumes _norm_cdf helper is defined — see Q1 solution)
+
+def q5A(num_simulations, random_seed, mu0, sigma, n, alpha, z_critical):
+    np.random.seed(random_seed)
+    # Draw all samples at once for efficiency
+    samples      = np.random.normal(mu0, sigma, (num_simulations, n))
+    sample_means = np.sum(samples, axis=1) / n
+    z_stats      = (sample_means - mu0) / (sigma / np.sqrt(n))
+    # Lower-tail test: reject H0 when Z < z_critical (z_critical is negative, e.g. -1.645)
+    type1_rate   = float(np.sum(z_stats < z_critical) / num_simulations)
+    return type1_rate
+
+
+def q5B(num_simulations, random_seed, mu0, sigma, n, alpha, z_critical, mu1):
+    np.random.seed(random_seed)
+    samples      = np.random.normal(mu1, sigma, (num_simulations, n))
+    sample_means = np.sum(samples, axis=1) / n
+    z_stats      = (sample_means - mu0) / (sigma / np.sqrt(n))
+    # Type II: fail to reject H0 (Z >= z_critical) even though H0 is false
+    beta         = float(np.sum(z_stats >= z_critical) / num_simulations)
+    return beta
+
+
+def q5C(num_simulations, random_seed, mu0, sigma, n, alpha, z_critical, mu1):
+    beta         = q5B(num_simulations, random_seed, mu0, sigma, n,
+                       alpha, z_critical, mu1)
+    emp_power    = float(1.0 - beta)
+    # Theoretical power: Phi(z_critical + (mu0 - mu1) / SE)
+    se           = sigma / np.sqrt(n)
+    z_arg        = z_critical + (mu0 - mu1) / se
+    theo_power   = float(_norm_cdf(z_arg))
+    diff         = float(abs(emp_power - theo_power))
+    return (emp_power, theo_power, diff)
+
+
+if __name__ == '__main__':
+    params = dict(num_simulations=50000, random_seed=0,
+                  mu0=500.0, sigma=10.0, n=30, alpha=0.05,
+                  z_critical=-1.645)
+    t1  = q5A(**params)
+    t2  = q5B(**params, mu1=495.0)
+    ep, tp, d = q5C(**params, mu1=495.0)
+    print(f"Type I  = {t1:.10f}")
+    print(f"Type II = {t2:.10f}")
+    print(f"Emp Power={ep:.10f}, Theo Power={tp:.10f}, |diff|={d:.10f}")
+</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ Q6 ════ -->
+  <div class="question-card" id="q6">
+    <div class="q-header">
+      <div class="q-number">06</div>
+      <div class="q-header-right">
+        <div class="q-title">One-Way ANOVA (Analysis of Variance)</div>
+        <div class="q-subtitle">
+          <span class="tag">3 functions</span>
+          <span class="tag file">📄 battery_life.csv</span>
+          <span class="tag">SSB · SSW · F-statistic</span>
+        </div>
+      </div>
+    </div>
+    <div class="q-context">
+      <div class="context-label">Context</div>
+      <p>An electronics manufacturer tests three battery suppliers — <strong>Supplier X, Y, and Z</strong> — to determine whether mean battery life differs significantly across suppliers. Implement a complete one-way ANOVA from scratch: decompose total variance into <strong>between-group and within-group components</strong>, compute the F-statistic, and reach a test decision.</p>
+    </div>
+    <div class="dataset-info">
+      <span class="ds-item">File: <a href="battery_life.csv" download class="csv-link">📥 battery_life.csv</a></span>
+      <span class="ds-item">Columns: <span class="ds-val">Supplier (X/Y/Z), Battery Life Hours (Float)</span></span>
+    </div>
+    <div class="q-tasks">
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">A</span>
+          <span class="task-fn">q6A(df)</span>
+        </div>
+        <div class="task-body">
+          Separate battery life values into three arrays by supplier. Using <strong>definitional formulas</strong>, compute the group mean for each supplier and the overall <strong>grand mean</strong>. Return mean_X, mean_Y, mean_Z, grand_mean.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, float, float, float)</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">B</span>
+          <span class="task-fn">q6B(df)</span>
+        </div>
+        <div class="task-body">
+          Calculate <strong>SSB</strong> (Sum of Squares Between) and <strong>SSW</strong> (Sum of Squares Within). Derive df_between = k−1, df_within = N−k. Compute MSB, MSW, and <strong>F-statistic = MSB/MSW</strong>. Return SSB, SSW, df_between, df_within, F.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(float, float, int, int, float)</span></div>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-label">
+          <span class="task-letter">C</span>
+          <span class="task-fn">q6C(f_stat, df_pair, f_critical)</span>
+        </div>
+        <div class="task-body">
+          Compare F-statistic against the critical F-value (e.g. 3.056 for α=0.05, df=(2,147)). Return True if H₀ is rejected (at least one group mean differs), and the absolute difference F_stat − F_critical.
+          <div class="returns"><span class="ret-label">returns →</span><span class="ret-type">tuple(bool, float)</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="solution-toggle" onclick="toggleSol(this)">
+      <div class="solution-toggle-left">
+        <span class="sol-icon">◈</span> View Solution
+      </div>
+      <svg class="sol-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+    <div class="solution-panel">
+      <div class="solution-inner">
+        <div class="sol-header">
+          <div class="sol-header-left">Solution — Q6</div>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-python">def q6A(df):
+    x_vals     = df[df['Supplier'] == 'X']['Battery Life Hours'].values
+    y_vals     = df[df['Supplier'] == 'Y']['Battery Life Hours'].values
+    z_vals     = df[df['Supplier'] == 'Z']['Battery Life Hours'].values
+    mean_X     = float(np.sum(x_vals) / len(x_vals))
+    mean_Y     = float(np.sum(y_vals) / len(y_vals))
+    mean_Z     = float(np.sum(z_vals) / len(z_vals))
+    all_vals   = np.concatenate([x_vals, y_vals, z_vals])
+    grand_mean = float(np.sum(all_vals) / len(all_vals))
+    return (mean_X, mean_Y, mean_Z, grand_mean)
+
+
+def q6B(df):
+    x_vals   = df[df['Supplier'] == 'X']['Battery Life Hours'].values
+    y_vals   = df[df['Supplier'] == 'Y']['Battery Life Hours'].values
+    z_vals   = df[df['Supplier'] == 'Z']['Battery Life Hours'].values
+    groups   = [x_vals, y_vals, z_vals]
+    all_vals = np.concatenate(groups)
+    N        = len(all_vals)
+    k        = 3
+
+    grand_mean = float(np.sum(all_vals) / N)
+
+    # SSB: Σ n_i * (x̄_i − x̄)²
+    SSB = float(sum(
+        len(g) * (float(np.sum(g) / len(g)) - grand_mean) ** 2
+        for g in groups
+    ))
+    # SSW: Σ Σ (x_ij − x̄_i)²
+    SSW = float(sum(
+        float(np.sum((g - np.sum(g) / len(g)) ** 2))
+        for g in groups
+    ))
+
+    df_between = int(k - 1)
+    df_within  = int(N - k)
+    MSB        = SSB / df_between
+    MSW        = SSW / df_within
+    F          = float(MSB / MSW)
+    return (SSB, SSW, df_between, df_within, F)
+
+
+def q6C(f_stat, df_pair, f_critical):
+    rejected = bool(f_stat > f_critical)
+    diff     = float(abs(f_stat - f_critical))
+    return (rejected, diff)
+
+
+if __name__ == '__main__':
+    df = pd.read_csv('battery_life.csv')
+    mX, mY, mZ, gm     = q6A(df)
+    SSB, SSW, dfb, dfw, F = q6B(df)
+    rej, diff           = q6C(F, (dfb, dfw), 3.056)
+    print(f"Means: X={mX:.10f}, Y={mY:.10f}, Z={mZ:.10f}, Grand={gm:.10f}")
+    print(f"SSB={SSB:.10f}, SSW={SSW:.10f}")
+    print(f"df_b={dfb}, df_w={dfw}, F={F:.10f}")
+    print(f"reject={rej}, |F-F_crit|={diff:.10f}")
+</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <p><strong>Give ur best!!!</strong></p>
+    <p>IC252 · Probability &amp; Statistics · Hypothesis Testing</p>
+  </div>
+
+</main>
+</div>
+
+<script>
+// ─── Highlight.js init ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre code').forEach(el => {
+    hljs.highlightElement(el);
+  });
+});
+
+// ─── Instructions toggle ────────────────────────────────────────────
+function toggleInstr() {
+  document.getElementById('instrCard').classList.toggle('open');
+}
+
+// ─── Solution toggle ────────────────────────────────────────────────
+function toggleSol(btn) {
+  const card = btn.closest('.question-card');
+  card.classList.toggle('sol-open');
+  // Re-highlight if newly opened (content was hidden during initial parse)
+  if (card.classList.contains('sol-open')) {
+    card.querySelectorAll('pre code:not(.hljs)').forEach(el => {
+      hljs.highlightElement(el);
+    });
+  }
+}
+
+// ─── Copy code ──────────────────────────────────────────────────────
+function copyCode(btn) {
+  const code = btn.closest('.solution-inner').querySelector('pre code');
+  const text = code.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied';
+    btn.style.background = 'var(--green)';
+    btn.style.color = '#000';
+    btn.style.borderColor = 'var(--green)';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }, 2000);
+  });
+}
+
+// ─── Sidebar active on scroll ───────────────────────────────────────
+const sections = ['q1','q2','q3','q4','q5','q6'];
+const navItems = document.querySelectorAll('.nav-item');
+
+function updateActive() {
+  let current = sections[0];
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 80) current = id;
+  }
+  navItems.forEach(item => {
+    item.classList.toggle('active', item.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateActive, {passive: true});
+updateActive();
+</script>
+</body>
+</html>
